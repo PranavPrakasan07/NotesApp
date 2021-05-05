@@ -13,5 +13,9 @@
     <color name="text_color">#212121</color>
     <color name="hint_text_color">#80212121</color>
     <color name="highlight">#1AFFFFFF</color>
+    <color name="tint_color">#212121</color>
+    <color name="selected_icon_color">#5DC5FF</color>
+    <color name="nav_bar_stroke">#40212121</color>
+    <color name="off_white">#FAFAFA</color>
 
 </resources>

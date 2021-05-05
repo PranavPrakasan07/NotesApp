@@ -2,6 +2,7 @@ package com.example.notesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -60,6 +61,13 @@ public class LoginActivity extends AppCompatActivity {
             intent1.putExtras(bundle);
 
             startActivity(intent1);
+        });
+
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            }
         });
     }
 
