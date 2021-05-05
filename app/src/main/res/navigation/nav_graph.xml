@@ -10,9 +10,11 @@
         android:name="com.example.notesapp.AddNoteFragment"
         android:label="fragment_add_note"
         tools:layout="@layout/fragment_add_note" />
+
     <fragment
         android:id="@+id/noteListFragment"
         android:name="com.example.notesapp.NoteListFragment"
         android:label="fragment_note_list"
         tools:layout="@layout/fragment_note_list" />
+
 </navigation>

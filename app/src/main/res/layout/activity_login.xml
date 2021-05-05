@@ -28,7 +28,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="Username"
+        android:hint="Email"
         android:textColorHint="@color/hint_text_color"
         app:boxStrokeColor="@color/text_color"
         app:endIconMode="clear_text"
@@ -43,6 +43,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:textColor="@color/text_color"
+            android:textColorHighlight="@color/highlight"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filled_contact"
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Mobile"
+        android:textColorHint="@color/hint_text_color"
+        app:boxStrokeColor="#00223A"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/hint_text_color"
+        app:hintTextColor="@color/hint_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filled_username">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
             android:textColor="@color/text_color"
             android:textColorHighlight="@color/highlight"
             android:textSize="16sp" />
@@ -69,7 +100,7 @@
         app:hintTextColor="@color/hint_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filled_username">
+        app:layout_constraintTop_toBottomOf="@+id/filled_contact">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
