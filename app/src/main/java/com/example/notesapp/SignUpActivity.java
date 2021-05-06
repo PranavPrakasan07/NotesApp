@@ -32,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputLayout name_l, email_l, password_l, contact_l;
 
     String name_text, email_text, password_text, contact_text;
+    int flag = 0;
 
     private SQLiteDatabaseHandler db;
 
@@ -90,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int flag = 0;
+                flag = 0;
                 name_text = name.getText().toString();
                 email_text = email.getText().toString();
                 password_text = password.getText().toString();
@@ -103,22 +104,23 @@ public class SignUpActivity extends AppCompatActivity {
                     flag = 1;
                 } else {
                     name_l.setErrorEnabled(false);
-                    flag = 0;
 
                 }
 
-                if (contact.length() != 10) {
+                if (contact_text.equals("")) {
+                    contact_l.setError("Enter mobile number");
+                    flag = 1;
+
+                } else if (contact_text.length() != 13) {
                     contact_l.setError("Enter correct mobile number");
                     flag = 1;
 
-                }
-                if (!contact_text.startsWith("+91")) {
+                } else if (!contact_text.startsWith("+91")) {
                     contact_l.setError("Enter Indian mobile number");
                     flag = 1;
 
                 } else {
                     contact_l.setErrorEnabled(false);
-                    flag = 0;
 
                 }
 
@@ -128,7 +130,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                 } else {
                     email_l.setErrorEnabled(false);
-                    flag = 0;
 
                 }
 
@@ -138,7 +139,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                 } else {
                     password_l.setErrorEnabled(false);
-                    flag = 0;
 
                 }
 
@@ -189,8 +189,10 @@ public class SignUpActivity extends AppCompatActivity {
 //                }
 
 
-                if (flag == 1) {
+                if (flag == 0) {
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                } else {
+                    flag = 0;
                 }
             }
         });
@@ -235,8 +237,8 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validate_password(String password) {
 
         //Regular Expression
-        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}";
-        ;
+        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z0-9-]{2,})(?=.*[@#$%]+).{8,15}";
+
         //Compile regular expression to get the pattern
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);

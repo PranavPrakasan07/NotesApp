@@ -95,7 +95,7 @@
         app:boxStrokeColor="@color/text_color"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/hint_text_color"
-        app:helperText="At least 6 characters long"
+        app:helperText="At least 2 uppercase, digits and 1 special character"
         app:helperTextTextColor="@color/hint_text_color"
         app:hintTextColor="@color/hint_text_color"
         app:layout_constraintEnd_toEndOf="parent"

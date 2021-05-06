@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout email_l, password_l, contact_l;
 
     Button login_button;
+    int flag = 0;
 
     @Override
     public void onStart() {
@@ -80,22 +81,27 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int flag = 0;
+                flag = 0;
                 String email_text = email.getText().toString();
                 String password_text = password.getText().toString();
                 String contact_text = contact.getText().toString();
 
+                if (contact_text.equals("")) {
+                    contact_l.setError("Enter mobile number");
+                    flag = 1;
 
-                if (contact.length() != 10) {
+                }
+                else if (contact_text.length() != 13) {
                     contact_l.setError("Enter correct mobile number");
                     flag = 1;
 
                 }
-                if (!contact_text.startsWith("+91")) {
+                else if (!contact_text.startsWith("+91")) {
                     contact_l.setError("Enter Indian mobile number");
                     flag = 1;
 
-                } else {
+                }
+                else {
                     contact_l.setErrorEnabled(false);
                 }
 
@@ -113,11 +119,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
                     password_l.setErrorEnabled(false);
-
                 }
 
-
-                if (flag == 1) {
+                if (flag == 0) {
 
                     try {
                         String hash = toHexString(getSHA(password_text));
@@ -126,6 +130,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                }else{
+                    flag = 0;
                 }
             }
         });
@@ -167,8 +173,8 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validate_password(String password) {
 
         //Regular Expression
-        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}";
-        ;
+        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z0-9-]{2,})(?=.*[@#$%]+).{8,15}";
+
         //Compile regular expression to get the pattern
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);
