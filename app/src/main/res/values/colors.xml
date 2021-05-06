@@ -17,5 +17,6 @@
     <color name="selected_icon_color">#5DC5FF</color>
     <color name="nav_bar_stroke">#40212121</color>
     <color name="off_white">#FAFAFA</color>
+    <color name="transparent">#00FFFFFF</color>
 
 </resources>

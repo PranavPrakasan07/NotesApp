@@ -37,6 +37,8 @@
             android:gravity="center"
             android:inputType="textEmailAddress"
             android:textAlignment="center"
+            android:maxLength="100"
+            android:minEms="5"
             android:textColor="@color/text_color"
             android:textColorHighlight="@color/highlight"
             android:textSize="16sp" />
@@ -72,6 +74,8 @@
             android:gravity="center"
             android:inputType="textLongMessage|textMultiLine"
             android:textAlignment="center"
+            android:maxLength="1000"
+            android:minEms="100"
             android:textColor="@color/text_color"
             android:textColorHighlight="@color/highlight"
             android:textSize="16sp" />
@@ -86,31 +90,42 @@
         app:constraint_referenced_ids="filled_description"
         tools:layout_editor_absoluteY="118dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="16dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/image"
-        app:layout_constraintTop_toBottomOf="@id/barrier3"
-        app:layout_constraintBottom_toTopOf="@id/barrier4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+    
+    
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="relativeLayout,imageView" />
+        app:constraint_referenced_ids="relativeLayout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toTopOf="@id/barrier4"
+        app:layout_constraintTop_toBottomOf="@id/barrier3"
+        tools:layout_editor_absoluteX="196dp"
+        tools:layout_editor_absoluteY="343dp">
+
+        <ImageButton
+            android:id="@+id/camera_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_camera" />
+
+        <ImageButton
+            android:id="@+id/file_upload_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_drive_folder_upload" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
