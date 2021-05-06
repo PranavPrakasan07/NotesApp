@@ -1,11 +1,9 @@
 package com.example.notesapp;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -23,24 +21,21 @@ public class HomeActivity extends AppCompatActivity {
 
         bottomNavigationView.setSelected(true);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 
-                Fragment selectedFragment = null;
+            Fragment selectedFragment = null;
 
-                if (item.getItemId() == R.id.addNoteFragment) {
-                    selectedFragment = new AddNoteFragment();
-                }
-                if (item.getItemId() == R.id.noteListFragment) {
-                    selectedFragment = new NoteListFragment();
-                }
-
-                assert selectedFragment != null;
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, selectedFragment).commit();
-
-                return true;
+            if (item.getItemId() == R.id.addNoteFragment) {
+                selectedFragment = new AddNoteFragment();
             }
+            if (item.getItemId() == R.id.noteListFragment) {
+                selectedFragment = new NoteListFragment();
+            }
+
+            assert selectedFragment != null;
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment, selectedFragment).commit();
+
+            return true;
         });
 
     }

@@ -1,36 +1,31 @@
 package com.example.notesapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +46,6 @@ public class AddNoteFragment extends Fragment {
     public static ArrayList<NotesData> list = new ArrayList<>();
 
     ListView photo_list;
-    Context context;
 
     ArrayList<Bitmap> photo_array = new ArrayList<>(10);
 
@@ -118,69 +112,57 @@ public class AddNoteFragment extends Fragment {
         ConstraintLayout main = view.findViewById(R.id.main_layout);
         LottieAnimationView animationView = view.findViewById(R.id.animationView);
 
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
+        camera.setOnClickListener(v -> {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
         });
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
-            }
+        upload.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, RESULT_LOAD_IMAGE);
         });
 
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String header_text = heading.getText().toString();
-                String description_text = description.getText().toString();
-                int flag = 0;
+        add.setOnClickListener(v -> {
+            String header_text = heading.getText().toString();
+            String description_text = description.getText().toString();
+            int flag = 0;
 
-                if (header_text.equals("")) {
-                    flag = 1;
-                    title_l.setError("Set a title");
+            if (header_text.equals("")) {
+                flag = 1;
+                title_l.setError("Set a title");
 
-                } else {
-                    title_l.setErrorEnabled(false);
-
-                }
-
-                if (description_text.equals("")) {
-                    desc_l.setError("Provide a description");
-                    flag = 1;
-
-                } else {
-                    desc_l.setErrorEnabled(false);
-
-                }
-
-
-                if (flag == 0) {
-
-                    list.add(new NotesData(header_text, description_text, (int) photo_image.getAlpha()));
-
-                    main.setVisibility(View.GONE);
-                    animationView.setVisibility(View.VISIBLE);
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            main.setVisibility(View.VISIBLE);
-                            animationView.setVisibility(View.GONE);
-
-                            heading.setText("");
-                            description.setText("");
-                        }
-                    }, 2000);
-                }
+            } else {
+                title_l.setErrorEnabled(false);
 
             }
+
+            if (description_text.equals("")) {
+                desc_l.setError("Provide a description");
+                flag = 1;
+
+            } else {
+                desc_l.setErrorEnabled(false);
+
+            }
+
+
+            if (flag == 0) {
+
+                list.add(new NotesData(header_text, description_text, (int) photo_image.getAlpha()));
+
+                main.setVisibility(View.GONE);
+                animationView.setVisibility(View.VISIBLE);
+
+                new Handler().postDelayed(() -> {
+                    main.setVisibility(View.VISIBLE);
+                    animationView.setVisibility(View.GONE);
+
+                    heading.setText("");
+                    description.setText("");
+                }, 2000);
+            }
+
         });
 
         return view;

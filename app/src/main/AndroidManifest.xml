@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.NotesApp">
+
         <activity android:name=".HomeActivity"/>
-        <activity android:name=".AddNoteActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SplashScreen">

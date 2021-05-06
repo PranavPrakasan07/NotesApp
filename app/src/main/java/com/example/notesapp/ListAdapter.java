@@ -1,6 +1,5 @@
 package com.example.notesapp;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +36,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.textView2.setText(listdata.get(position).getDescription());
 
         holder.imageView.setImageAlpha(listdata.get(position).getImage_id());
-        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "click on item: " + myListData.getDescription(), Toast.LENGTH_LONG).show();
-            }
-        });
+        holder.constraintLayout.setOnClickListener(view -> Toast.makeText(view.getContext(), "click on item: " + myListData.getDescription(), Toast.LENGTH_LONG).show());
     }
 
 

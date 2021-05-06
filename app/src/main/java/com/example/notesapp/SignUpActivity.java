@@ -1,14 +1,10 @@
 package com.example.notesapp;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +14,6 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,80 +81,78 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-        signup_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        signup_button.setOnClickListener(v -> {
 
-                flag = 0;
-                name_text = name.getText().toString();
-                email_text = email.getText().toString();
-                password_text = password.getText().toString();
-                contact_text = contact.getText().toString();
+            flag = 0;
+            name_text = name.getText().toString();
+            email_text = email.getText().toString();
+            password_text = password.getText().toString();
+            contact_text = contact.getText().toString();
 
-                String hash = null;
+            String hash = null;
 
-                if (name_text.equals("")) {
-                    name_l.setError("Enter your name");
-                    flag = 1;
-                } else {
-                    name_l.setErrorEnabled(false);
+            if (name_text.equals("")) {
+                name_l.setError("Enter your name");
+                flag = 1;
+            } else {
+                name_l.setErrorEnabled(false);
 
-                }
+            }
 
-                if (contact_text.equals("")) {
-                    contact_l.setError("Enter mobile number");
-                    flag = 1;
+            if (contact_text.equals("")) {
+                contact_l.setError("Enter mobile number");
+                flag = 1;
 
-                } else if (contact_text.length() != 13) {
-                    contact_l.setError("Enter correct mobile number");
-                    flag = 1;
+            } else if (contact_text.length() != 13) {
+                contact_l.setError("Enter correct mobile number");
+                flag = 1;
 
-                } else if (!contact_text.startsWith("+91")) {
-                    contact_l.setError("Enter Indian mobile number");
-                    flag = 1;
+            } else if (!contact_text.startsWith("+91")) {
+                contact_l.setError("Enter Indian mobile number");
+                flag = 1;
 
-                } else {
-                    contact_l.setErrorEnabled(false);
+            } else {
+                contact_l.setErrorEnabled(false);
 
-                }
+            }
 
-                if (!validate_email(email_text)) {
-                    email_l.setError("Invalid email");
-                    flag = 1;
+            if (!validate_email(email_text)) {
+                email_l.setError("Invalid email");
+                flag = 1;
 
-                } else {
-                    email_l.setErrorEnabled(false);
+            } else {
+                email_l.setErrorEnabled(false);
 
-                }
+            }
 
-                if (!validate_password(password_text)) {
-                    password_l.setError("Invalid password");
-                    flag = 1;
+            if (!validate_password(password_text)) {
+                password_l.setError("Invalid password");
+                flag = 1;
 
-                } else {
-                    password_l.setErrorEnabled(false);
+            } else {
+                password_l.setErrorEnabled(false);
 
-                }
+            }
 
-                try {
-                    hash = toHexString(getSHA(password_text));
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
+            try {
+                hash = toHexString(getSHA(password_text));
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
 
-                UserDetails.name = name_text;
-                UserDetails.password_hash = hash;
-                UserDetails.contact = contact_text;
-                UserDetails.email = email_text;
+            UserDetails.name = name_text;
+            UserDetails.password_hash = hash;
+            UserDetails.contact = contact_text;
+            UserDetails.email = email_text;
 
 
-                // create some players
-                UserDetails player1 = new UserDetails(name_text, email_text, hash, contact_text);
+            // create some players
+            UserDetails player1 = new UserDetails(name_text, email_text, hash, contact_text);
 
-                // add them
-                db.addUser(player1);
+            // add them
+            db.addUser(player1);
 
-                // list all players
+            // list all players
 //                List<UserDetails> players = db.allUsers();
 //
 //                if (players != null) {
@@ -189,11 +181,10 @@ public class SignUpActivity extends AppCompatActivity {
 //                }
 
 
-                if (flag == 0) {
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                } else {
-                    flag = 0;
-                }
+            if (flag == 0) {
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            } else {
+                flag = 0;
             }
         });
 

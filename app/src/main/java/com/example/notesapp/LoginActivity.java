@@ -2,7 +2,6 @@ package com.example.notesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -77,62 +76,56 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent1);
         });
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        login_button.setOnClickListener(v -> {
 
+            flag = 0;
+            String email_text = email.getText().toString();
+            String password_text = password.getText().toString();
+            String contact_text = contact.getText().toString();
+
+            if (contact_text.equals("")) {
+                contact_l.setError("Enter mobile number");
+                flag = 1;
+
+            } else if (contact_text.length() != 13) {
+                contact_l.setError("Enter correct mobile number");
+                flag = 1;
+
+            } else if (!contact_text.startsWith("+91")) {
+                contact_l.setError("Enter Indian mobile number");
+                flag = 1;
+
+            } else {
+                contact_l.setErrorEnabled(false);
+            }
+
+            if (!validate_email(email_text)) {
+                email_l.setError("Invalid email");
+                flag = 1;
+
+            } else {
+                email_l.setErrorEnabled(false);
+            }
+
+            if (!validate_password(password_text)) {
+                password_l.setError("Invalid password");
+                flag = 1;
+
+            } else {
+                password_l.setErrorEnabled(false);
+            }
+
+            if (flag == 0) {
+
+                try {
+                    String hash = toHexString(getSHA(password_text));
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            } else {
                 flag = 0;
-                String email_text = email.getText().toString();
-                String password_text = password.getText().toString();
-                String contact_text = contact.getText().toString();
-
-                if (contact_text.equals("")) {
-                    contact_l.setError("Enter mobile number");
-                    flag = 1;
-
-                }
-                else if (contact_text.length() != 13) {
-                    contact_l.setError("Enter correct mobile number");
-                    flag = 1;
-
-                }
-                else if (!contact_text.startsWith("+91")) {
-                    contact_l.setError("Enter Indian mobile number");
-                    flag = 1;
-
-                }
-                else {
-                    contact_l.setErrorEnabled(false);
-                }
-
-                if (!validate_email(email_text)) {
-                    email_l.setError("Invalid email");
-                    flag = 1;
-
-                } else {
-                    email_l.setErrorEnabled(false);
-                }
-
-                if (!validate_password(password_text)) {
-                    password_l.setError("Invalid password");
-                    flag = 1;
-
-                } else {
-                    password_l.setErrorEnabled(false);
-                }
-
-                if (flag == 0) {
-
-                    try {
-                        String hash = toHexString(getSHA(password_text));
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    }
-
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                }else{
-                    flag = 0;
-                }
             }
         });
     }
