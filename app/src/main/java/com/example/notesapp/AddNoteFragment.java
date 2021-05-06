@@ -2,22 +2,29 @@ package com.example.notesapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +34,9 @@ import java.util.ArrayList;
 public class AddNoteFragment extends Fragment {
 
     private static final int CAMERA_REQUEST = 1888;
+    private static final int RESULT_OK = 1;
+    private static final int RESULT_LOAD_IMAGE = 2;
+
     ImageView photo_image;
     ImageButton camera, upload;
 
@@ -85,11 +95,21 @@ public class AddNoteFragment extends Fragment {
         camera = view.findViewById(R.id.camera_button);
         upload = view.findViewById(R.id.file_upload_button);
 
+        photo_list = view.findViewById(R.id.photo_list);
+
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+        });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
 
@@ -100,8 +120,10 @@ public class AddNoteFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.d("TAG", "picturePath1");
 
         if (requestCode == CAMERA_REQUEST) {
+            assert data != null;
             Bitmap photo = (Bitmap) data.getExtras().get("data");
 
             if (photo_array.size() == 10) {
@@ -109,8 +131,31 @@ public class AddNoteFragment extends Fragment {
             } else {
                 photo_array.add(photo);
                 photo_image.setImageBitmap(photo);
-            }
 
+//                ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, photo_array);
+//                photo_list.setAdapter(arrayAdapter);
+            }
+        }
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            Log.d("TAG", "picturePath2");
+
+            Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
+            Uri selectedImage = data.getData();
+
+            Log.d("TAG", "picturePath3");
+
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = requireActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            Toast.makeText(getActivity(), picturePath, Toast.LENGTH_SHORT).show();
+            cursor.close();
+
+
+            Log.d("TAG", picturePath);
+            photo_image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
     }
 }
