@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/addNoteFragment"
-        android:icon="@drawable/ic_outline_add_circle_outline_24"
+        android:icon="@drawable/ic_add"
         android:title="Add" />
 
     <item
         android:id="@+id/noteListFragment"
-        android:icon="@drawable/ic_baseline_notes_24"
+        android:icon="@drawable/ic_notes"
         android:title="List" />
 
 </menu>
