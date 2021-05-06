@@ -27,7 +27,7 @@
         app:hintTextColor="@color/hint_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -100,19 +100,19 @@
         app:constraint_referenced_ids="relativeLayout" />
 
     <LinearLayout
+        android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toTopOf="@id/barrier4"
         app:layout_constraintTop_toBottomOf="@id/barrier3"
         tools:layout_editor_absoluteX="196dp"
         tools:layout_editor_absoluteY="343dp">
 
         <ImageButton
             android:id="@+id/camera_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:scaleType="fitCenter"
@@ -120,12 +120,31 @@
 
         <ImageButton
             android:id="@+id/file_upload_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_drive_folder_upload" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/image"
+        android:layout_margin="16dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_layout"
+        app:layout_constraintBottom_toTopOf="@id/barrier4"
+        tools:layout_editor_absoluteY="538dp" />
+
+<!--    <ListView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:layout_editor_absoluteY="336dp" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
