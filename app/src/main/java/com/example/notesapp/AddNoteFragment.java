@@ -143,21 +143,21 @@ public class AddNoteFragment extends Fragment {
                 int flag = 0;
 
                 if (header_text.equals("")) {
-                    Toast.makeText(getActivity(), "Enter a title", Toast.LENGTH_SHORT).show();
                     flag = 1;
                     title_l.setError("Set a title");
 
                 } else {
                     title_l.setErrorEnabled(false);
+
                 }
 
                 if (description_text.equals("")) {
-                    Toast.makeText(getActivity(), "Enter the description", Toast.LENGTH_SHORT).show();
                     desc_l.setError("Provide a description");
                     flag = 1;
 
                 } else {
                     desc_l.setErrorEnabled(false);
+
                 }
 
 

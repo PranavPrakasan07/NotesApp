@@ -51,7 +51,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         signup_button = findViewById(R.id.signup_button);
 
-
+        contact_l = findViewById(R.id.filled_contact);
+        name_l = findViewById(R.id.filled_name);
+        email_l = findViewById(R.id.filled_username);
+        password_l = findViewById(R.id.filled_password);
 
         Intent intent = getIntent();
 
@@ -87,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                int flag = 0;
                 name_text = name.getText().toString();
                 email_text = email.getText().toString();
                 password_text = password.getText().toString();
@@ -94,18 +98,52 @@ public class SignUpActivity extends AppCompatActivity {
 
                 String hash = null;
 
-                if (!validate_email(email_text)){
-                    Toast.makeText(SignUpActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                if (name_text.equals("")) {
+                    name_l.setError("Enter your name");
+                    flag = 1;
+                } else {
+                    name_l.setErrorEnabled(false);
+                    flag = 0;
+
                 }
 
-                if(!validate_password(password_text)){
-                    Toast.makeText(SignUpActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
+                if (contact.length() != 10) {
+                    contact_l.setError("Enter correct mobile number");
+                    flag = 1;
+
+                }
+                if (!contact_text.startsWith("+91")) {
+                    contact_l.setError("Enter Indian mobile number");
+                    flag = 1;
+
+                } else {
+                    contact_l.setErrorEnabled(false);
+                    flag = 0;
+
                 }
 
+                if (!validate_email(email_text)) {
+                    email_l.setError("Invalid email");
+                    flag = 1;
+
+                } else {
+                    email_l.setErrorEnabled(false);
+                    flag = 0;
+
+                }
+
+                if (!validate_password(password_text)) {
+                    password_l.setError("Invalid password");
+                    flag = 1;
+
+                } else {
+                    password_l.setErrorEnabled(false);
+                    flag = 0;
+
+                }
 
                 try {
                     hash = toHexString(getSHA(password_text));
-                    Toast.makeText(SignUpActivity.this, hash, Toast.LENGTH_SHORT).show();
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
@@ -150,13 +188,14 @@ public class SignUpActivity extends AppCompatActivity {
 //                    e.printStackTrace();
 //                }
 
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
+                if (flag == 1) {
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                }
             }
         });
 
     }
-
-
 
 
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
@@ -196,7 +235,8 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validate_password(String password) {
 
         //Regular Expression
-        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}";        ;
+        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}";
+        ;
         //Compile regular expression to get the pattern
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);
