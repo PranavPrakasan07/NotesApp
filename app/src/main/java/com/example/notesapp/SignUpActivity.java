@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -27,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextView login_link;
 
     Button signup_button;
+    TextInputLayout name_l, email_l, password_l, contact_l;
 
     String name_text, email_text, password_text, contact_text;
 
@@ -47,6 +50,8 @@ public class SignUpActivity extends AppCompatActivity {
         login_link = findViewById(R.id.login_link);
 
         signup_button = findViewById(R.id.signup_button);
+
+
 
         Intent intent = getIntent();
 

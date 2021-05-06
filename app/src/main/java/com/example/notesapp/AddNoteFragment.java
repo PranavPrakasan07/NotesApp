@@ -10,18 +10,24 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -38,7 +44,11 @@ public class AddNoteFragment extends Fragment {
     private static final int RESULT_LOAD_IMAGE = 2;
 
     ImageView photo_image;
-    ImageButton camera, upload;
+    ImageButton camera, upload, add;
+
+    EditText heading, description;
+
+    public static ArrayList<NotesData> list = new ArrayList<>();
 
     ListView photo_list;
     Context context;
@@ -94,8 +104,19 @@ public class AddNoteFragment extends Fragment {
         photo_image = view.findViewById(R.id.photo);
         camera = view.findViewById(R.id.camera_button);
         upload = view.findViewById(R.id.file_upload_button);
+        add = view.findViewById(R.id.add_button);
+
+        heading = view.findViewById(R.id.title_heading);
+        description = view.findViewById(R.id.description);
 
         photo_list = view.findViewById(R.id.photo_list);
+
+        TextInputLayout title_l = view.findViewById(R.id.filled_title);
+        TextInputLayout desc_l = view.findViewById(R.id.filled_description);
+
+
+        ConstraintLayout main = view.findViewById(R.id.main_layout);
+        LottieAnimationView animationView = view.findViewById(R.id.animationView);
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +131,55 @@ public class AddNoteFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
+
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String header_text = heading.getText().toString();
+                String description_text = description.getText().toString();
+                int flag = 0;
+
+                if (header_text.equals("")) {
+                    Toast.makeText(getActivity(), "Enter a title", Toast.LENGTH_SHORT).show();
+                    flag = 1;
+                    title_l.setError("Set a title");
+
+                } else {
+                    title_l.setErrorEnabled(false);
+                }
+
+                if (description_text.equals("")) {
+                    Toast.makeText(getActivity(), "Enter the description", Toast.LENGTH_SHORT).show();
+                    desc_l.setError("Provide a description");
+                    flag = 1;
+
+                } else {
+                    desc_l.setErrorEnabled(false);
+                }
+
+
+                if (flag == 0) {
+
+                    list.add(new NotesData(header_text, description_text, (int) photo_image.getAlpha()));
+
+                    main.setVisibility(View.GONE);
+                    animationView.setVisibility(View.VISIBLE);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            main.setVisibility(View.VISIBLE);
+                            animationView.setVisibility(View.GONE);
+
+                            heading.setText("");
+                            description.setText("");
+                        }
+                    }, 2000);
+                }
+
             }
         });
 
